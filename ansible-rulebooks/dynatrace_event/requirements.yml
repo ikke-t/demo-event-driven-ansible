@@ -1,0 +1,6 @@
+---
+collections:
+  - ansible.eda
+  - name: https://github.com/Dynatrace/Dynatrace-EventDrivenAnsible.git
+    type: git
+    version: 189ad30c516f24ad24119945c211ba15976fe8ba

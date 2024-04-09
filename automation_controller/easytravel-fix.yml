@@ -6,7 +6,7 @@
   vars:
     - easytravel_url: http://rh-dynatrace-08.cool.lab:8091
   tasks:
-    - name: call easytravel API to break purchase button
+    - name: call easytravel API to fix purchase button
       ansible.builtin.uri:
         url: '{{ easytravel_url }}/services/ConfigurationService/setPluginEnabled?name=CreditCardCheckError500&enabled=false'
         return_content: true

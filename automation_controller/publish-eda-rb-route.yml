@@ -1,0 +1,33 @@
+---
+- name: Publish EDA webhook route
+  hosts: localhost
+  gather_facts: false
+  vars:
+    ns: if.you.see.this.you.missed.namespace
+    url_suffix: if.you.see.this.you.missed.domain
+    activation_job_name: if.you.see.this.you.missed.job.name
+  tasks:
+    - name: Ensure route
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: route.openshift.io/v1
+          kind: Route
+          metadata:
+            labels:
+              app: eda
+              job-name: '{{ activation_job_name }}'
+            namespace: '{{ ns }}'
+            name: eda-wh-labs
+          spec:
+            host: 'eda-webhook.{{ url_suffix }}'
+            to:
+              kind: Service
+              name: '{{ activation_job_name }}'
+              weight: 100
+            port:
+              targetPort: 5000
+            tls:
+              termination: edge
+              insecureEdgeTerminationPolicy: Redirect
+            wildcardPolicy: None
